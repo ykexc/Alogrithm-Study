@@ -48,4 +48,35 @@ public class LeetCode6173 {
         }
         return res;
     }
+
+
+    public int maximumRows2(int[][] mat, int cols) {
+        int n = mat.length, m = mat[0].length;
+        int ans = 0;
+        int[] rowState = new int[n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (mat[i][j] == 1) {
+                    rowState[i] |= 1 << j;
+                }
+            }
+        }
+        for (int i = 0; i < 1 << m; i++) {
+            int cnt = 0;
+            for (int j = 0; j < m; j++) {
+                cnt += i >> j & 1;
+            }
+            if (cnt != cols) {
+                continue;
+            }
+            int t = 0;
+            for (int j = 0; j < n; j++) {
+                if ((rowState[j] & i) == rowState[j]) {
+                    t++;
+                }
+            }
+            ans = Math.max(ans, t);
+        }
+        return ans;
+    }
 }
