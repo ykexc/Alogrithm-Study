@@ -1,5 +1,8 @@
 package leetcode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author 86152
  */
@@ -63,6 +66,49 @@ public class LeetCode952 {
             max = Math.max(max, ans[t]);
         }
         return max;
+    }
+
+    public int largestComponentSize2(int[] nums) {
+        int n = nums.length;
+        List<Integer> path[] = new List[n + 5];
+        for (int i = 0; i < n; i++) {
+            path[i] = new ArrayList<>();
+        }
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (gcd(nums[i], nums[j]) > 1) {
+                    path[i].add(j);
+                    path[j].add(i);
+                }
+            }
+        }
+        int ans = 0;
+        boolean used[] = new boolean[n + 5];
+        for (int i = 0; i < n; i++) {
+            if (!used[i]) {
+                int count = 1;
+                used[i] = true;
+                List<Integer> list = new ArrayList<>();
+                list.add(i);
+                for (int j = 0; j < list.size(); j++) {
+                    int a = list.get(j);
+                    for (int k = 0; k < path[a].size(); k++) {
+                        int b = path[a].get(k);
+                        if (!used[b]) {
+                            used[b] = true;
+                            list.add(b);
+                            count++;
+                        }
+                    }
+                }
+                ans = Math.max(ans, count);
+            }
+        }
+        return ans;
+    }
+
+    int gcd(int a, int b) {
+        return a <= b ? (b % a == 0 ? a : gcd(b % a, a)) : gcd(b, a);
     }
 
 }
