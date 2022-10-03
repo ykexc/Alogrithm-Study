@@ -7,7 +7,6 @@ import java.util.Arrays;
  */
 public class LeetCode85 {
 
-
     public int maximalRectangle(char[][] matrix) {
         int n = matrix.length, m = matrix[0].length;
         var sum = new int[n + 1][m];
