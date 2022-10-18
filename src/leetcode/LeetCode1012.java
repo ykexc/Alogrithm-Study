@@ -27,7 +27,8 @@ public class LeetCode1012 {
         var res = 0;
         if (!isNum) res = f(i + 1, mask, false, false);
         for (int j = isNum ? 0 : 1, up = isLimit ? s[i] - '0' : 9; j <= up; j++) {
-            if ((mask >> j & 1) == 0) res += f(i + 1, mask | (1 << j), isLimit && j == up, true);
+            if ((mask >> j & 1) == 0) //d不在mask中
+                res += f(i + 1, mask | (1 << j), isLimit && j == up, true);
         }
         if (!isLimit && isNum) dp[i][mask] = res;
         return res;
