@@ -3,6 +3,9 @@ package leetcode;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 回溯模板题
+ */
 public class LeetCode784 {
 
     List<String> ans = new ArrayList<>();
