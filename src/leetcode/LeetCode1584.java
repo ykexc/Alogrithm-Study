@@ -1,5 +1,6 @@
 package leetcode;
 
+import java.util.Comparator;
 import java.util.PriorityQueue;
 
 /**
@@ -8,7 +9,7 @@ import java.util.PriorityQueue;
 public class LeetCode1584 {
 
     /**
-     *Kruskal
+     * Kruskal
      */
     public int minCostConnectPoints(int[][] points) {
         var n = points.length;
@@ -80,6 +81,7 @@ public class LeetCode1584 {
             }
         }
     }
+
     static class Edge {
         int point1;
         int point2;
@@ -90,5 +92,41 @@ public class LeetCode1584 {
             this.point2 = point2;
             this.cost = cost;
         }
+    }
+
+    /**
+     * prim
+     */
+    public int minCostConnectPoints2(int[][] points) {
+        var n = points.length;
+        var vis = new boolean[n];
+        var heap = new PriorityQueue<Edge>(Comparator.comparingInt(a -> a.cost));
+        var ans = 0;
+        var size = n - 1;
+        for (var i = 1; i < n; i++) {
+            var p0 = points[0];
+            var pi = points[i];
+            var distance = Math.abs(p0[0] - pi[0]) + Math.abs(p0[1] - pi[1]);
+            heap.add(new Edge(0, i, distance));
+        }
+        vis[0] = true;
+        while (!heap.isEmpty()) {
+            Edge edge = heap.poll();
+            int point2 = edge.point2;
+            int cost = edge.cost;
+            if (!vis[point2]) {
+                ans += cost;
+                size--;
+                vis[point2] = true;
+                for (int i = 0; i < n; i++) {
+                    if (!vis[i]) {
+                        var distance = Math.abs(points[point2][0] - points[i][0]) + Math.abs(points[point2][1] - points[i][1]);
+                        heap.add(new Edge(point2, i, distance));
+                    }
+                }
+            }
+            if (size == 0) break;
+        }
+        return ans;
     }
 }
