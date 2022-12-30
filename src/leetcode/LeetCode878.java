@@ -1,5 +1,8 @@
 package leetcode;
 
+/**
+ * 容斥原理
+ */
 public class LeetCode878 {
 
     int n, a, b, c;
