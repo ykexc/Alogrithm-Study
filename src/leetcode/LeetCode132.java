@@ -1,5 +1,8 @@
 package leetcode;
 
+/**
+ * 区间DP
+ */
 public class LeetCode132 {
 
     public int minCut(String s) {
